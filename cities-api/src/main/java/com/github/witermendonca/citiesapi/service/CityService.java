@@ -1,17 +1,17 @@
 package com.github.witermendonca.citiesapi.service;
 
 import com.github.witermendonca.citiesapi.entity.City;
+import com.github.witermendonca.citiesapi.exception.CityNotFoundException;
 import com.github.witermendonca.citiesapi.repository.CityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.geo.Point;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +27,30 @@ public class CityService {
 
     public Page<City> listAllPage(Pageable page) {
         return cityRepository.findAll(page);
+    }
+
+    public Double distanceByPointsInMiles(final Long city1, final Long city2) throws CityNotFoundException {
+
+        City foundCity1 = verifyIfIdExists(city1);
+        City foundCity2 = verifyIfIdExists(city2);
+
+        return cityRepository.distanceByPoints(foundCity1.getId(), foundCity2.getId());
+
+    }
+
+    public Double distanceByCubeInMeters(Long city1, Long city2) throws CityNotFoundException {
+
+        City foundCity1 = verifyIfIdExists(city1);
+        City foundCity2 = verifyIfIdExists(city2);
+
+        return  cityRepository.distanceByCube(foundCity1.getLatitude(),foundCity1.getLongitude(),
+                    foundCity2.getLatitude(), foundCity2.getLongitude());
+
+    }
+
+    private City verifyIfIdExists(Long id) throws CityNotFoundException {
+        return cityRepository.findById(id)
+                .orElseThrow(() -> new CityNotFoundException(id));
     }
 
 
