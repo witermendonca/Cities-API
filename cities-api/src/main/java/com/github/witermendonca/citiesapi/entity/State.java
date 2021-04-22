@@ -1,15 +1,22 @@
 package com.github.witermendonca.citiesapi.entity;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import java.util.List;
+import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
+import javax.persistence.FetchType;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.Basic;
 
-import javax.persistence.*;
-import java.util.List;
 
 @Entity(name = "State")
 @Table(name = "estado")

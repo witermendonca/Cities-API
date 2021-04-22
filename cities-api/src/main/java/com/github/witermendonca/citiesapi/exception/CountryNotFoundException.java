@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class CountryNotFoundException extends Exception {
 
+    private static final long serialVersionUID = 1L;
+
     public CountryNotFoundException(Long id) {
-        super ("Country not found with ID " + id );
+        super("Country not found with ID " + id);
     }
 }
